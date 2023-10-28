@@ -1,0 +1,115 @@
+/* Styles for larger screens */
+.mainbody {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.form {
+    border-radius: 5px;
+    box-shadow: rgba(17, 17, 26, 0.05) 0px 1px 0px, rgba(17, 17, 26, 0.1) 0px 0px 8px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    width: 80%;
+    height: 80%;
+    background-color: white;
+}
+
+.mainForm {
+    padding: 50px;
+}
+
+.formLeft {
+    background-color: #1b2d47;
+    border-radius: 5px 0px 0px 5px;
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 10px;
+
+}
+
+.formtitle {
+    font-size: 26px;
+    font-weight: 700;
+    margin-bottom: 10px;
+    color: #ff924c;
+}
+
+.formRight {
+    background-color: white;
+}
+
+.title {
+    display: flex;
+    justify-content: center;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.subtitle {
+    margin: 10px 0px 30px 0px;
+    text-align: center;
+}
+
+.loginButton {
+    background-color: #009da3;
+    color: white;
+    border-radius: 5px;
+    padding: 5px 15px;
+    width: 100%;
+}
+
+.bottomOption {
+    color: blue;
+    /* margin-right: 5px; */
+}
+
+.facebookButton {
+    background-color: #3b5998;
+    color: white;
+    border-radius: 5px;
+    padding: 5px 15px;
+    width: 100%;
+}
+
+.googleButton {
+    background-color: rgb(220, 21, 21);
+    color: white;
+    border-radius: 5px;
+    padding: 5px 15px;
+    width: 100%;
+}
+
+.authProviderButton {
+    margin-top: 10px;
+    flex-direction: row;
+}
+
+/* Media query for smaller screens (e.g., mobile) */
+@media (max-width: 600px) {
+
+    .form {
+        /* Adjust styles for smaller screens, e.g., full width and padding */
+        width: 96%;
+        box-shadow: none;
+        grid-template-columns: 1fr;
+    }
+
+    .mainForm {
+        padding: 50px 10px 10px 10px;
+        background-color: white;
+        border-radius: 5px;
+    }
+
+    .formLeft {
+        display: none;
+    }
+    .authProviderButton {
+        margin-top: 6px;
+        flex-direction: column;
+    }
+}

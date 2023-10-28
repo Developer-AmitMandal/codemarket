@@ -9,19 +9,33 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@chakra-ui/react": "^2.8.1",
+    "@emotion/react": "^11.11.1",
+    "@emotion/styled": "^11.11.0",
+    "@fontsource/roboto": "^5.0.8",
+    "@mui/icons-material": "^5.14.15",
+    "@mui/material": "^5.14.15",
+    "@mui/styled-engine-sc": "^6.0.0-alpha.3",
+    "axios": "^1.6.0",
+    "framer-motion": "^10.16.4",
+    "mongodb": "^6.2.0",
+    "next": "13.5.6",
+    "next-auth": "^4.24.3",
     "react": "^18",
     "react-dom": "^18",
-    "next": "13.5.6"
+    "react-router-dom": "^6.17.0",
+    "sharp": "^0.32.6",
+    "styled-components": "^6.1.0"
   },
   "devDependencies": {
-    "typescript": "^5",
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",
     "autoprefixer": "^10",
+    "eslint": "^8",
+    "eslint-config-next": "13.5.6",
     "postcss": "^8",
     "tailwindcss": "^3",
-    "eslint": "^8",
-    "eslint-config-next": "13.5.6"
+    "typescript": "^5"
   }
 }
