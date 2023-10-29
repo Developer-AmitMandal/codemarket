@@ -96,7 +96,7 @@ export async function GET() {
     try {
         const data = await projects.find({}).toArray();
         // console.log(data)
-        return NextResponse.json({ msg: 'successfully fetched data', projects: data }, { status: 201 })
+        return NextResponse.json({ msg: 'successfully fetched data', projects: data.json() }, { status: 201 })
     } catch (error) {
         return NextResponse.json({ msg: 'backend server error', error: error }, { status: 500 })
     }
