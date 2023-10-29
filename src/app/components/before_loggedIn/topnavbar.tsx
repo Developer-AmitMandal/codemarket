@@ -1,12 +1,10 @@
 'use client'
-import { usePathname, useRouter } from 'next/navigation'
+import {  useRouter } from 'next/navigation'
 import './css/topnavbar.css'
 import { Button } from '@chakra-ui/react'
 import Image from 'next/image'
 
 export function Topnavbar() {
-    const pathname = usePathname()
-
     const router = useRouter()
 
     return (

@@ -6,3 +6,64 @@
 body {
   background: #E2E8F0;
 }
+
+.mainBody {
+  margin: 10px 35px;
+}
+
+.projectCard {
+  background-color: rgb(255, 255, 255);
+  height: auto;
+  margin: 10px;
+  border-radius: 5px;
+  box-shadow: rgba(17, 17, 26, 0.1) 0px 0px 16px;
+}
+
+.title {
+  font-size: 18px;
+  font-weight: 400;
+  font-family: 'Roboto', sans-serif;
+}
+.description{
+  margin-top: -5px;
+  font-size: 14px;
+}
+
+.likeButton {
+  /* color: white; */
+  padding: 3px 5px 2px 5px;
+  background-color: rgb(255, 255, 255);
+  font-size: 12px;
+  border-radius: 5px;
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 3px 0px, rgba(0, 0, 0, 0.06) 0px 1px 2px 0px;
+  position: relative;
+}
+.downloadButton {
+  color: white;
+  padding: 3px 5px 2px 5px;
+  background-color: rgb(204, 75, 43);
+  font-size: 12px;
+  border-radius: 5px;
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 3px 0px, rgba(0, 0, 0, 0.06) 0px 1px 2px 0px;
+}
+
+
+
+
+.btnGroup{
+  padding: 10px 5px;
+}
+
+@media (max-width:600px) {
+  .mainBody {
+    margin: 10px 0px;
+  }
+
+  .projectCard {
+    background-color: rgb(255, 255, 255);
+    height: 450px;
+    margin: 10px;
+    border-radius: 5px;
+    box-shadow: rgba(17, 17, 26, 0.1) 0px 0px 16px;
+  }
+}

@@ -13,24 +13,13 @@
     height: 40%;
 }
 
-.loginButton {
-    background-color: #009da3;
+.loggedOutButton {
+    background-color: #D80032;
     color: white;
     border-radius: 5px;
     padding: 5px 15px;
     width: 100%;
-    ;
 }
-
-.signupButton {
-    background-color: #ff924c;
-    color: white;
-    border-radius: 5px;
-    padding: 5px 15px;
-    width: 100%;
-    ;
-}
-
 .rightNavOption {
     display: flex;
     justify-content: space-between;
@@ -38,7 +27,7 @@
 }
 
 @media (max-width:600px) {
-    .topnavbar{
+    .topnavbar {
         padding: 0px 0px;
     }
 }
