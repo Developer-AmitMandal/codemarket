@@ -25,4 +25,6 @@ const client = new MongoClient(uri, {
 // run().catch(console.dir);
 
 let users = await client.db("codemarket").collection('users');
-export { users }
+let projects = await client.db("codemarket").collection('projects');
+
+export { users, projects }

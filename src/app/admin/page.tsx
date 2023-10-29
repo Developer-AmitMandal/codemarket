@@ -1,10 +1,14 @@
 "use client"
 import React, { ChangeEvent, useEffect, useState } from 'react';
 import './css/adminpanel.css';
-import { Button } from '@chakra-ui/react';
+import { Button, ChakraProvider, useToast } from '@chakra-ui/react';
 import axios from 'axios';
+import { customTheme } from '../components/chakraui';
 
 export default function AdminPanel({ params }: any) {
+
+    const toast = useToast();
+
     const [projectData, setProjectData] = useState({
         uploadtype: '',
         title: '',
@@ -43,47 +47,59 @@ export default function AdminPanel({ params }: any) {
         if (typeof localStorage !== 'undefined') {
             const typeFromLocalStorage = localStorage.getItem('type');
             if (typeFromLocalStorage) {
-                setProjectData({ ...projectData, uploadtype: typeFromLocalStorage });
+                setProjectData((prevData) => ({
+                    ...prevData,
+                    uploadtype: typeFromLocalStorage,
+                }));
             }
         }
-    }, []);
+    }, []); // Include projectData as a dependency
 
-    console.log(process.env.server_url)
-
-    const [isDisabledButton, setisDisabledButton] = useState(false)
+    const [isDisabledButton, setisDisabledButton] = useState(false);
 
     const publishData = async () => {
-        const formData = new FormData();
-        formData.set('file', fileData.file);
-        formData.set('thumbnail', fileData.thumbnail);
-        formData.set('title', projectData.title);
-        formData.set('description', projectData.description);
-        formData.set('likes', projectData.likes.toString());
-        formData.set('price', projectData.price.toString());
-        formData.set('downloads', projectData.downloads.toString());
-        try {
-            // const res = await axios.post(`/api/publish`, formData, {
-            //     headers: {
-            //         'Content-Type': 'multipart/form-data',
-            //         'Authorization': ''
-            //     }
-            // });
-            const res = await fetch('/api/publish', {
-                method: 'POST',
-                body: formData
-              })
-
-            console.log(res);
-        } catch (error) {
-            console.log('publish api error', error)
+        const { title, description, likes, downloads, price } = projectData;
+        if (!title) {
+            toast({ title: 'Enter Project Title', status: 'warning', duration: 4000, position: 'top-right', isClosable: true });
+        } else if (!description) {
+            toast({ title: 'Enter Project Description', status: 'warning', duration: 4000, position: 'top-right', isClosable: true });
+        } else if (!price) {
+            toast({ title: 'Enter Project price', status: 'warning', duration: 4000, position: 'top-right', isClosable: true });
+        } else if (!likes) {
+            toast({ title: 'Increase Likes', status: 'warning', duration: 4000, position: 'top-right', isClosable: true });
+        } else if (!downloads) {
+            toast({ title: 'Increase Downloads', status: 'warning', duration: 4000, position: 'top-right', isClosable: true });
+        } else {
+            const formData = new FormData();
+            formData.set('file', fileData.file);
+            formData.set('thumbnail', fileData.thumbnail);
+            formData.set('title', projectData.title);
+            formData.set('description', projectData.description);
+            formData.set('likes', projectData.likes.toString());
+            formData.set('price', projectData.price.toString());
+            formData.set('downloads', projectData.downloads.toString());
+            try {
+                setisDisabledButton(true);
+                const res = await axios.post(`/api/projects`, formData);
+                if (res.status === 201) {
+                    toast({ title: res.data.msg, status: 'success', duration: 4000, position: 'top-right', isClosable: true });
+                    window.location.reload();
+                    setisDisabledButton(false);
+                } else {
+                    setisDisabledButton(false);
+                    toast({ title: res.data.msg, status: 'error', duration: 4000, position: 'top-right', isClosable: true });
+                }
+            } catch (error) {
+                setisDisabledButton(false);
+                console.log('publish api error', error)
+            }
         }
-
     }
-
 
     return (
         <main className="adminpanel">
-            <div className='uploadproject'>
+            <ChakraProvider theme={customTheme} />
+            <form className='uploadproject'>
                 <div>
                     <select
                         value={projectData?.uploadtype}
@@ -114,7 +130,7 @@ export default function AdminPanel({ params }: any) {
                                 <textarea
                                     id="description"
                                     name="description"
-                                    onChange={() => { inputData1 }}
+                                    onChange={inputData1}
                                     rows={3}
                                     className="mt-3 p-2 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-10"
                                     defaultValue={''}
@@ -208,7 +224,7 @@ export default function AdminPanel({ params }: any) {
 
 
                 <div className="mt-6 flex items-center justify-end gap-x-6">
-                    <Button className="text-sm font-semibold leading-6 text-gray-900">
+                    <Button type='reset' className="text-sm font-semibold leading-6 text-gray-900">
                         Cancel
                     </Button>
                     <Button
@@ -220,7 +236,7 @@ export default function AdminPanel({ params }: any) {
                         Publish
                     </Button>
                 </div>
-            </div>
+            </form>
         </main>
     )
 }

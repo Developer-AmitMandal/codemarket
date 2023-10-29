@@ -2,13 +2,15 @@
 @tailwind components;
 @tailwind utilities;
 
-
+html{
+  scroll-behavior: smooth;
+}
 body {
   background: #E2E8F0;
 }
 
 .mainBody {
-  margin: 10px 35px;
+  margin: 0px 35px;
 }
 
 .projectCard {
@@ -16,9 +18,13 @@ body {
   height: auto;
   margin: 10px;
   border-radius: 5px;
+  box-shadow: rgba(67, 71, 85, 0.27) 0px 0px 0.25em, rgba(90, 125, 188, 0.05) 0px 0.25em 1em;
+}
+.imageThumbnail{
+  border-radius: 5px 5px 0px 0px;
+  padding: 5px;
   box-shadow: rgba(17, 17, 26, 0.1) 0px 0px 16px;
 }
-
 .title {
   font-size: 18px;
   font-weight: 400;

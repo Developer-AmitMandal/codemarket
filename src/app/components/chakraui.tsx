@@ -9,7 +9,7 @@ export const customTheme = extendTheme({
     styles: {
         global: {
             body: {
-                bg: '#EEE', // Set the background color to light '#fafafb'
+                bg: '#E2E8F0', // Set the background color to light '#fafafb'
             },
         },
     },
