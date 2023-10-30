@@ -74,7 +74,8 @@ export default function SingleProjectDescriptions({ params }: any) {
             }
         }
         fetchProjects();
-    }, [])
+        // react-hooks/exhaustive-deps
+    }, []);
 
 
     return (
