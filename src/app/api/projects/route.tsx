@@ -2,7 +2,7 @@ import { writeFile } from 'fs/promises'
 import { NextRequest, NextResponse } from 'next/server'
 import { projects } from '@/db/database'
 import { S3Client, PutObjectCommand, ListObjectsCommand, DeleteObjectCommand, GetObjectCommand } from '@aws-sdk/client-s3';
-
+import { ObjectId } from 'mongodb';
 
 const region = process.env.AWS_Region;
 const accessKey = process.env.Access_key;
@@ -20,7 +20,7 @@ export async function POST(request: NextRequest) {
 
     try {
         const data = await request.formData();
-        console.log(data)
+        // console.log(data)
 
         const file: File | null = data.get('file') as unknown as File
         const thumbnail: File | null = data.get('thumbnail') as unknown as File
@@ -87,6 +87,7 @@ export async function POST(request: NextRequest) {
 
         return NextResponse.json({ msg: 'project successfully published' }, { status: 201 })
     } catch (error) {
+        console.log('Backend Server Error', error);
         return NextResponse.json({ msg: 'backend server error', error: error }, { status: 500 })
     }
 }
@@ -94,10 +95,62 @@ export async function POST(request: NextRequest) {
 
 export async function GET() {
     try {
-        const data = await projects.find({}).toArray();
-        // console.log(data)
-        return NextResponse.json({ msg: 'successfully fetched data', projects: data.json() }, { status: 201 })
+        const data = await projects
+            .find({})
+            .project({ file: 0, details: 0 })
+            .limit(50)
+            .toArray();
+        //   console.log(data);
+
+        return NextResponse.json({ msg: 'successfully fetched data', projects: data }, { status: 201 })
     } catch (error) {
+        console.log('Backend Server Error', error);
+        return NextResponse.json({ msg: 'backend server error', error: error }, { status: 500 })
+    }
+}
+
+
+export async function PATCH(request: NextRequest) {
+    try {
+        const data = await request.formData();
+
+        const image: File | null = data.get('image') as unknown as File
+        const title: File | null = data.get('title') as unknown as File
+        const projectId: string | null = data.get('projectId') as unknown as string;
+
+        if (!image) {
+            return NextResponse.json({ msg: 'Project file is empty' })
+        }
+
+        // files
+        const bytes = await image.arrayBuffer();
+        const bufferFile = Buffer.from(bytes);
+
+        const fileExtension2 = '.' + image.name.split('.').pop();
+        const newthumbnailName = 'thumbnail' + Date.now() + fileExtension2;
+
+        const params2 = {
+            Bucket: process.env.Buket_Name,
+            Key: 'thumbnails/' + newthumbnailName,
+            Body: bufferFile,
+        };
+        const command2 = new PutObjectCommand(params2);
+        await s3Client.send(command2);
+
+        const updatedData = await projects.updateOne({ _id:new ObjectId(projectId) }, {
+            $push: {
+                details: {
+                    id: new ObjectId().toString(),
+                    title: title,
+                    image: newthumbnailName,
+                }
+            }
+        })
+        // console.log(updatedData);
+
+        return NextResponse.json({ msg: 'Data successfully Added.' }, { status: 201 })
+    } catch (error) {
+        console.log('Backend Server Error', error);
         return NextResponse.json({ msg: 'backend server error', error: error }, { status: 500 })
     }
 }

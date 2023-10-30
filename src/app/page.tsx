@@ -12,19 +12,32 @@ import axios from 'axios';
 import { s3_bucket_url } from '@/app/components/configrations'
 import { Topnavbar } from './components/before_loggedIn/topnavbar';
 import Footer from './components/before_loggedIn/footer';
+import { isEmptyArray } from './components/CustomFunctions';
+import { ProjectMedia } from './components/CustomLoading';
 
 export default function Home() {
 
   const router = useRouter();
 
-  const [projects, setprojects] = useState([]);
+  interface Project {
+    _id: string;
+    title: string;
+    description: string;
+    thumbnail: string;
+    price: number;
+    likes: number;
+    downloads: number;
+    // Add other properties as needed
+  }
+
+  const [projects, setProjects] = useState<Project[]>([]);
 
   useEffect(() => {
     const fetchProjects = async () => {
       try {
         const res = await axios.get('/api/projects');
         if (res.status === 201) {
-          setprojects(res.data.projects);
+          setProjects(res.data.projects);
         } else {
           console.log('fetch post error');
         }
@@ -119,51 +132,54 @@ export default function Home() {
               }}
             />
           </div>
-        </div>
-        <main className="mainBody" id='learnmore'>
-          <SimpleGrid spacing={10} templateColumns='repeat(auto-fill, minmax(350px, 1fr))' style={{ marginTop: '-50px' }} className='pb-20'>
+          <main className="mainBody" id='learnmore'>
             {
-              projects?.map((project, index) => {
-                return (
-                  <div key={index} className='projectCard'>
-                    <Link href={`/${project?._id}`}>
-                      <Image
-                        src={`${s3_bucket_url!}/thumbnails/${project?.thumbnail}`}
-                        alt="Picture of the codemarket"
-                        width={500} //automatically provided
-                        height={500} //automatically provided
-                        blurDataURL="data:..." // automatically provided
-                        placeholder="blur" // Optional blur-up while loading
-                        className='imageThumbnail'
-                      />
-                      <div className='p-1 title'>{project?.title}</div>
-                      <div className='p-1 description'>{project?.description}</div>
-                    </Link>
-                    <div className='btnGroup'>
-                      <Button
-                        className='likeButton mr-2'
-                        leftIcon={
-                          clickLike === index ? <FcLike style={{ marginRight: '-2px', marginTop: '-3px', fontSize: '16px' }} /> : <FcLikePlaceholder style={{ marginRight: '-2px', marginTop: '-3px', fontSize: '16px' }} />}
+              isEmptyArray(projects) ? <ProjectMedia /> :
+                <SimpleGrid spacing={10} templateColumns='repeat(auto-fill, minmax(350px, 1fr))' style={{ marginTop: '-50px' }} className='pb-20'>
+                  {
+                    projects.map((project, index) => {
+                      return (
+                        <div key={index} className='projectCard'>
+                          <Link href={`/${project?._id}`}>
+                            <Image
+                              src={`${s3_bucket_url!}/thumbnails/${project?.thumbnail}`}
+                              alt="Picture of the codemarket"
+                              width={500} //automatically provided
+                              height={500} //automatically provided
+                              blurDataURL="data:..." // automatically provided
+                              placeholder="blur" // Optional blur-up while loading
+                              className='imageThumbnail'
+                            />
+                            <div className='p-1 title'>{project?.title}</div>
+                            <div className='p-1 description'>{project?.description}</div>
+                          </Link>
+                          <div className='btnGroup'>
+                            <Button
+                              className='likeButton mr-2'
+                              leftIcon={
+                                clickLike === index ? <FcLike style={{ marginRight: '-2px', marginTop: '-3px', fontSize: '16px' }} /> : <FcLikePlaceholder style={{ marginRight: '-2px', marginTop: '-3px', fontSize: '16px' }} />}
 
-                        onClick={() => { likeBtn(index) }}
-                      >
-                        {project?.likes > 1000 ? formatLikes(project?.likes) : formatLikes(project?.likes)} Like
-                      </Button>
+                              onClick={() => { likeBtn(index) }}
+                            >
+                              {project?.likes > 1000 ? formatLikes(project?.likes) : formatLikes(project?.likes)} Like
+                            </Button>
 
-                      <Button
-                        className='downloadButton'
-                        leftIcon={<DownloadForOfflineOutlinedIcon sx={{ marginRight: '-5px', fontSize: '18px' }} />}
-                        onClick={() => { router.push('/auth/login') }}
-                      >
-                        {project?.downloads > 1000 ? formatLikes(project?.downloads) : formatLikes(project?.downloads)} Downloads
-                      </Button>
-                    </div>
-                  </div>
-                )
-              })
+                            <Button
+                              className='downloadButton'
+                              leftIcon={<DownloadForOfflineOutlinedIcon sx={{ marginRight: '-5px', fontSize: '18px' }} />}
+                              onClick={() => { router.push('/auth/login') }}
+                            >
+                              {project?.downloads > 1000 ? formatLikes(project?.downloads) : formatLikes(project?.downloads)} Source Code
+                            </Button>
+                          </div>
+                        </div>
+                      )
+                    })
+                  }
+                </SimpleGrid>
             }
-          </SimpleGrid>
-        </main>
+          </main>
+        </div>
       </div>
 
       <Footer />

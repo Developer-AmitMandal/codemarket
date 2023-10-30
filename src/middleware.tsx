@@ -6,6 +6,7 @@ export function middleware(request: NextRequest) {
 
     const path = request.nextUrl.pathname;
     const isPublicPath = path === '/' || path === '/auth/login' || path === '/auth/signup';
+    // const isPublicPath = path === '/' || path === '/auth/login' || path === '/auth/signup' || path === '/admin' ;
 
     const token = request.cookies.get('codemarket');
 
@@ -25,6 +26,7 @@ export const config = {
         '/dashboard',
         '/auth/login',
         '/auth/signup',
-        '/profile'
+        '/profile',
+        '/admin'
     ]
 }

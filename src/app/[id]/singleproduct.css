@@ -1,0 +1,90 @@
+.singlepageProject{
+    margin: 10px 50px;
+}
+.singleproduct {
+    background-color: rgb(255, 255, 255);
+    display: flex;
+    justify-content: space-evenly;
+    padding: 10px;
+    border-radius: 5px;
+    box-shadow: rgba(17, 17, 26, 0.1) 0px 0px 16px;
+    width: 100%;
+    margin-bottom: 10px;
+}
+
+.screenshorts {
+    background-color: rgb(255, 255, 255);
+    justify-content: space-evenly;
+    padding: 10px;
+    border-radius: 5px;
+    box-shadow: rgba(17, 17, 26, 0.1) 0px 0px 16px;
+    width: 100%;
+
+}
+
+.image-container {
+    margin: 10px;
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+    box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;
+    border-radius: 10px;
+}
+
+.singleImage {
+    border-radius: 10px;
+}
+
+.detains-container {
+    margin: 10px;
+    width: 500px;
+
+}
+
+.projectTitle {
+    font-size: 24px;
+    font-weight: 800;
+    color: rgb(46, 40, 40);
+}
+
+.descriptionTitle {
+    font-size: 14px;
+    font-family: 'Roboto', sans-serif;
+    font-weight: 700;
+    color: rgb(110, 103, 103);
+}
+
+.screensorts212 {
+    box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;
+    border-radius: 5px;
+    padding: 5px;
+}
+
+
+@media (max-width:765px) {
+    .singlepageProject{
+        margin: 10px;
+    }
+    .singleproduct {
+        margin: 0px;
+        display: block;
+        width: 100%;
+        height: auto;
+        margin-bottom: 10px;
+        padding: 0px;
+    }
+
+    .image-container {
+        margin: 0px;
+        box-shadow: none;
+        border-radius: 0px;
+    }
+
+    .screenshorts {
+        margin: 0px;
+        display: block;
+    }
+
+    .detains-container {
+        margin: 10px;
+        width: 100%;
+    }
+}

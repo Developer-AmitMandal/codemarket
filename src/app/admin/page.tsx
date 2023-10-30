@@ -96,6 +96,82 @@ export default function AdminPanel({ params }: any) {
         }
     }
 
+    // add data to existing project
+    const [data, setdata] = useState({
+        projectId: '',
+        description: '',
+    });
+
+    const inputData2 = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
+        setdata({ ...data, [e.target.name]: e.target.value });
+    }
+
+    const [image, setImage] = useState({
+        image: '',
+    });
+    const fileInput2 = (e: ChangeEvent<HTMLInputElement>) => {
+        const files = e.target.files;
+        if (files && files.length > 0) {
+            const file = files[0];
+            setImage({ ...image, [e.target.name]: file });
+        } else {
+            // Handle the case when no file is selected
+        }
+    }
+    const [isdisabled2x, setisdisabled2x] = useState(false);
+
+    const submitData = async () => {
+        const { description, projectId } = data;
+
+        if (!projectId) {
+            toast({ title: 'select Project', status: 'warning', duration: 4000, position: 'top-right', isClosable: true });
+        } else if (!description) {
+            toast({ title: 'Enter Description', status: 'warning', duration: 4000, position: 'top-right', isClosable: true });
+        } else {
+            const formData = new FormData();
+            formData.set('image', image.image);
+            formData.set('title', data.description);
+            formData.set('projectId', data.projectId);
+            try {
+                setisdisabled2x(true);
+                const res = await axios.patch(`/api/projects`, formData);
+                if (res.status === 201) {
+                    toast({ title: res.data.msg, status: 'success', duration: 4000, position: 'top-right', isClosable: true });
+                    window.location.reload();
+                    setisdisabled2x(false);
+                } else {
+                    setisdisabled2x(false);
+                    toast({ title: res.data.msg, status: 'error', duration: 4000, position: 'top-right', isClosable: true });
+                }
+            } catch (error) {
+                setisdisabled2x(false);
+                console.log('publish api error', error)
+            }
+        }
+    }
+
+    interface Project {
+        _id: string;
+        title: string;
+    }
+    const [pdata, setpdata] = useState<Project[]>([]);
+    useEffect(() => {
+        const fetchProjects = async () => {
+            try {
+                const res = await axios.get('/api/projects');
+                if (res.status === 201) {
+                    setpdata(res.data.projects);
+                } else {
+                    console.log('fetch post error');
+                }
+            } catch (error) {
+                console.log('publish api error', error)
+            }
+        }
+        fetchProjects();
+    }, [])
+
+
     return (
         <main className="adminpanel">
             <ChakraProvider theme={customTheme} />
@@ -191,50 +267,78 @@ export default function AdminPanel({ params }: any) {
                                         placeholder="file"
                                     />
                                 </div>
+
+                                <div className="mt-6 flex items-center justify-end gap-x-6">
+                                    <Button type='reset' className="text-sm font-semibold leading-6 text-gray-900">
+                                        Cancel
+                                    </Button>
+                                    <Button
+                                        onClick={publishData}
+                                        isLoading={isDisabledButton}
+                                        loadingText='Publishing..'
+                                        className="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover-bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                                    >
+                                        Publish
+                                    </Button>
+                                </div>
                             </div>
 
                             :
                             <div>
+                                <select
+                                    id="type"
+                                    name="projectId"
+                                    onChange={inputData2}
+                                    autoComplete="projectId"
+                                    className="form-control mt-3 p-2 block rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                                >
+                                    <option value=''>Select Projects</option>
+                                    {
+                                        pdata?.map((project, index) => {
+                                            return (
+                                                <option key={index} value={project?._id}>{project?.title}</option>
+                                            )
+                                        })
+                                    }
+
+                                </select>
                                 <textarea
                                     id="description"
                                     name="description"
-                                    onChange={inputData1}
+                                    onChange={inputData2}
                                     rows={3}
                                     className="mt-3 p-2 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-10"
                                     defaultValue={''}
-                                    placeholder='Descriptions..'
+                                    placeholder='Title..'
                                 />
 
                                 <input
                                     type="file"
                                     name="image"
-                                    onChange={inputData1}
+                                    onChange={fileInput2}
                                     id="image"
                                     autoComplete="image"
                                     className="mt-3 p-2 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                                     placeholder="image"
                                 />
-
+                                <div className="mt-6 flex items-center justify-end gap-x-6">
+                                    <Button type='reset' className="text-sm font-semibold leading-6 text-gray-900">
+                                        Cancel
+                                    </Button>
+                                    <Button
+                                        onClick={submitData}
+                                        isLoading={isdisabled2x}
+                                        loadingText='Publishing..'
+                                        className="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover-bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                                    >
+                                        Add Data
+                                    </Button>
+                                </div>
                             </div>
 
                     }
 
 
-                </div>
-
-
-                <div className="mt-6 flex items-center justify-end gap-x-6">
-                    <Button type='reset' className="text-sm font-semibold leading-6 text-gray-900">
-                        Cancel
-                    </Button>
-                    <Button
-                        onClick={publishData}
-                        isLoading={isDisabledButton}
-                        loadingText='Publishing..'
-                        className="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover-bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-                    >
-                        Publish
-                    </Button>
                 </div>
             </form>
         </main>
