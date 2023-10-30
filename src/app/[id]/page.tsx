@@ -25,9 +25,6 @@ export default function SingleProjectDescriptions({ params }: any) {
             setClickLike(null); // Toggle like state off
         } else {
             setClickLike(index); // Toggle like state on
-
-
-
         }
     };
 
@@ -74,8 +71,7 @@ export default function SingleProjectDescriptions({ params }: any) {
             }
         }
         fetchProjects();
-        // react-hooks/exhaustive-deps
-    }, []);
+    }, [params]);
 
 
     return (
@@ -86,7 +82,7 @@ export default function SingleProjectDescriptions({ params }: any) {
                     isEmptyArray(projects) ? <SingleProject /> :
                         projects?.map((project, index) => {
                             return (
-                                <div className="singleproduct">
+                                <div key={index} className="singleproduct">
                                     <div className="image-container">
                                         <Image
                                             src={`${s3_bucket_url!}/thumbnails/${project?.thumbnail}`}
