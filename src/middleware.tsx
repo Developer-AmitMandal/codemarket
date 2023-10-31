@@ -27,6 +27,5 @@ export const config = {
         '/auth/login',
         '/auth/signup',
         '/profile',
-        '/admin'
     ]
 }

@@ -6,7 +6,7 @@ import Image from 'next/image';
 
 function ProjectMedia() {
     return (
-        <SimpleGrid spacing={10} templateColumns='repeat(auto-fill, minmax(350px, 1fr))' style={{ marginTop: '-50px' }} className='pb-20'>
+        <>
             <Box className='projectCard'>
                 <Image
                     src={`https://static.vecteezy.com/system/resources/previews/002/701/271/original/light-gray-gradient-blur-background-vector.jpg`}
@@ -138,10 +138,9 @@ function ProjectMedia() {
                         <Skeleton animation={false} style={{ width: '100px' }} />
                     </Button>
                 </div>
-            </Box>
+            </Box></>
 
 
-        </SimpleGrid >
     );
 }
 

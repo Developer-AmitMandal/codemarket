@@ -134,9 +134,10 @@ export default function Home() {
           </div>
           <main className="mainBody" id='learnmore'>
             {
-              isEmptyArray(projects) ? <ProjectMedia /> :
-                <SimpleGrid spacing={10} templateColumns='repeat(auto-fill, minmax(350px, 1fr))' style={{ marginTop: '-50px' }} className='pb-20'>
-                  {
+
+              <SimpleGrid spacing={10} templateColumns='repeat(auto-fill, minmax(350px, 1fr))' style={{ marginTop: '-50px' }} className='pb-20'>
+                {
+                  isEmptyArray(projects) ? <ProjectMedia /> :
                     projects.map((project, index) => {
                       return (
                         <div key={index} className='projectCard'>
@@ -169,14 +170,14 @@ export default function Home() {
                               leftIcon={<DownloadForOfflineOutlinedIcon sx={{ marginRight: '-5px', fontSize: '18px' }} />}
                               onClick={() => { router.push('/auth/login') }}
                             >
-                              {project?.downloads > 1000 ? formatLikes(project?.downloads) : formatLikes(project?.downloads)} Source Code
+                              {project?.downloads > 1000 ? formatLikes(project?.downloads) : formatLikes(project?.downloads)} Download
                             </Button>
                           </div>
                         </div>
                       )
                     })
-                  }
-                </SimpleGrid>
+                }
+              </SimpleGrid>
             }
           </main>
         </div>

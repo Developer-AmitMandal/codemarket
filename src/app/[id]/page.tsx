@@ -130,8 +130,6 @@ export default function SingleProjectDescriptions({ params }: any) {
 
                                             <Button
                                                 className='subscriptionButton'
-                                                leftIcon={<ArrowBackIosIcon sx={{ marginRight: '-15px', fontSize: '16px' }} />}
-                                                rightIcon={<ArrowForwardIosIcon sx={{ marginLeft: '-12px', fontSize: '16px' }} />}
                                                 onClick={() => { router.push('/auth/login') }}
                                             >
                                                 <DownloadForOfflineOutlinedIcon sx={{ marginRight: '2px', marginTop: '-2px', fontSize: '18px' }} /> Source Code

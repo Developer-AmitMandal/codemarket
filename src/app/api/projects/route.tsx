@@ -97,7 +97,7 @@ export async function GET() {
     try {
         const data = await projects
             .find({})
-            .project({ file: 0, details: 0 })
+            .project({ details: 0 })
             .limit(50)
             .toArray();
         //   console.log(data);

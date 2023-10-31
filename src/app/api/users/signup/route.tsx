@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { users } from "@/db/database";
+import jwt from "jsonwebtoken";
 
 export async function POST(request: NextRequest, response: NextResponse) {
     try {
@@ -14,32 +15,28 @@ export async function POST(request: NextRequest, response: NextResponse) {
                 {
                     firstName: firstName,
                     lastName: lastName,
+                    fullName: firstName + ' ' + lastName,
                     email: email,
                     mobile: mobile,
                     password: password,
                     image: '',
-                    subscription: {
-                        payment_id: "",
-                        order_id: "",
-                        currency: "INR",
-                        amount: 0,
-                        subscriberID: "",
-                        subscriptionType: "",
-                        subscriptionDate: "",
-                        startDate: "",
-                        endDate: "",
-                        status: "active",
-                        subscriptionPlan: "free",
-                        billingCycle: "",
-                        autoRenewal: false,
-                        cancellationDate: null,
-                        paymentInformation: {}
-                    }
+                    projectList: [],
+                    paymenyHistory: []
                 }
             )
-            // console.log(registerUser);
 
-            return NextResponse.json({ msg: 'user successfully created' }, { status: 201 });
+            const tokenData = {
+                id: registerUser.insertedId.toString(),
+                name: firstName + ' ' + lastName,
+                email: email
+            }
+
+            const token = await jwt.sign(tokenData, 'zxcvbnmlkjhgfdsaqwertyuiop123456', { expiresIn: '1d' });
+            // console.log(token);
+
+            const response = NextResponse.json({ msg: 'user successfully created' }, { status: 201 })
+            response.cookies.set('codemarket', token, { httpOnly: true });
+            return response;
         } else {
             return NextResponse.json({ msg: 'user already exist' }, { status: 200 });
         }
@@ -52,7 +49,7 @@ export async function POST(request: NextRequest, response: NextResponse) {
 
 export async function GET(request: NextRequest, response: NextResponse) {
     try {
-       
+
         return NextResponse.json({ msg: 'successfully get request' }, { status: 200 });
     } catch (error) {
         console.log(error);
