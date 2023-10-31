@@ -12,7 +12,7 @@ export async function POST(request: NextRequest) {
             .toArray();
         const ids = userData[0].projectList;
 
-        const objectIds = ids.map(a => new ObjectId(a));
+        const objectIds = ids.map((a: string) => new ObjectId(a));
 
         const projectsData = await projects.find({ _id: { $in: objectIds } }).toArray();
         // console.log(projectsData)

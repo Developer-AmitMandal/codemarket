@@ -29,7 +29,7 @@ export default async function Purchased({ params }) {
       }
     } catch (error) {
       router.push('/')
-      console.log('publish api error', error);
+      console.log('publish api error', error)
     }
   }
   useEffect(() => {
