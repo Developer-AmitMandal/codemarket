@@ -1,6 +1,6 @@
 'use client'
 import React, { useEffect, useState } from 'react';
-import { ChakraProvider, useToast } from '@chakra-ui/react'
+import { useToast } from '@chakra-ui/react'
 import Image from 'next/image'
 import { useRouter } from 'next/navigation'
 import './css/topnavbar.css'
@@ -50,11 +50,6 @@ export function Topnavbar() {
 
     // users data
     const [usersData, setUsers] = useState([]);
-
-    useEffect(() => {
-        fetchusers();
-    }, [])
-    
     const fetchusers = async () => {
         try {
             const res = await axios.get('/api/users');
@@ -68,10 +63,11 @@ export function Topnavbar() {
         }
     }
 
-   
+    useEffect(() => {
+        fetchusers();
+    }, [0]);
     return (
         <div className='topnavbar'>
-            <ChakraProvider />
             <Link href={'/dashboard'}>
                 <Image
                     src='/images/codemarket.png'
@@ -94,7 +90,7 @@ export function Topnavbar() {
                             aria-haspopup="true"
                             aria-expanded={open ? 'true' : undefined}
                         >
-                            <Avatar sx={{ width: 32, height: 32 }}></Avatar>
+                            <Avatar alt={usersData?.fullName} src='sd' sx={{ width: 32, height: 32 }}></Avatar>
                         </IconButton>
                     </Tooltip>
                 </Box>

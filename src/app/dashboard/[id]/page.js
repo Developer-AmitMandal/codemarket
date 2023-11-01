@@ -14,6 +14,7 @@ import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import './singleproduct.css'
 export default function SingleProjectDescriptions({ params }) {
 
+    const { id } = params;
     const router = useRouter();
     const toast = useToast();
     const [clickLike, setClickLike] = useState(null);
@@ -36,42 +37,42 @@ export default function SingleProjectDescriptions({ params }) {
         }
     }
     const [projects, setProjects] = useState([]);
-    useEffect(() => {
-        const fetchProjects = async () => {
-            try {
-                const res = await axios.post('/api/projects/singleproject', { id: params.id });
-                if (res.status === 201) {
-                    setProjects([res.data.projects]);
-                } else {
-                    console.log('fetch post error');
-                }
-            } catch (error) {
-                router.push('/')
-                console.log('publish api error', error)
+    const fetchProjects = async () => {
+        try {
+            const res = await axios.post('/api/projects/singleproject', { id: id });
+            if (res.status === 201) {
+                setProjects([res.data.projects]);
+            } else {
+                console.log('fetch post error');
             }
+        } catch (error) {
+            router.push('/')
+            console.log('publish api error', error)
         }
+    }
+
+    useEffect(() => {
         fetchProjects();
-    }, [params]);
+    }, [id]);
 
 
     //------------------
     const [projectIds, setprojectIds] = useState([]);
     const [usersData, setUsers] = useState([]);
-
-    useEffect(() => {
-        const fetchusers = async () => {
-            try {
-                const res = await axios.get('/api/users');
-                if (res.status === 201) {
-                    setprojectIds(res.data.users.projectList);
-                    setUsers(res.data.users);
-                } else {
-                    console.log('fetch post error');
-                }
-            } catch (error) {
-                console.log('get users api error', error)
+    const fetchusers = async () => {
+        try {
+            const res = await axios.get('/api/users');
+            if (res.status === 201) {
+                setprojectIds(res.data.users.projectList);
+                setUsers(res.data.users);
+            } else {
+                console.log('fetch post error');
             }
+        } catch (error) {
+            console.log('get users api error', error)
         }
+    }
+    useEffect(() => {
         fetchusers();
     }, []);
 

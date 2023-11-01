@@ -28,14 +28,14 @@ export default async function Purchased({ params }) {
         console.log('fetch post error');
       }
     } catch (error) {
-      router.push('/')
       console.log('publish api error', error)
     }
   }
   useEffect(() => {
-    fetchProjects();
-  }, [])
-
+    if (id) {
+      fetchProjects();
+    }
+  }, [id]);
 
 
   const [clickLike, setClickLike] = useState(null);
@@ -62,67 +62,63 @@ export default async function Purchased({ params }) {
 
 
   return (
-    <>
+    <div className="mainBody" id='learnmore'>
+      {
+        <SimpleGrid spacing={10} templateColumns='repeat(auto-fill, minmax(350px, 1fr))' className='pb-20 mt-10'>
+          {
+            isEmptyArray(projects) ? <div className="text-center">You have not purchased any projects</div> :
+              projects.map((project, index) => {
+                console.log()
+                return (
+                  <div key={index} className='projectCard'>
+                    <Link href={`/dashboard/${project?._id}`}>
+                      <Image
+                        src={`${s3_bucket_url}/thumbnails/${project?.thumbnail}`}
+                        alt="Picture of the codemarket"
+                        width={500} //automatically provided
+                        height={500} //automatically provided
+                        blurDataURL="data:..." // automatically provided
+                        placeholder="blur" // Optional blur-up while loading
+                        className='imageThumbnail'
+                      />
+                      <div className='p-1 title'>{project?.title}</div>
+                      <div className='p-1 description'>{project?.description}</div>
+                      <div className="mt-2 p-1">
 
-      <main className="mainBody" id='learnmore'>
-        {
-          <SimpleGrid spacing={10} templateColumns='repeat(auto-fill, minmax(350px, 1fr))' className='pb-20 mt-10'>
-            {
-              isEmptyArray(projects) ? <ProjectMedia /> :
-                projects.map((project, index) => {
-                  console.log()
-                  return (
-                    <div key={index} className='projectCard'>
-                      <Link href={`/dashboard/${project?._id}`}>
-                        <Image
-                          src={`${s3_bucket_url}/thumbnails/${project?.thumbnail}`}
-                          alt="Picture of the codemarket"
-                          width={500} //automatically provided
-                          height={500} //automatically provided
-                          blurDataURL="data:..." // automatically provided
-                          placeholder="blur" // Optional blur-up while loading
-                          className='imageThumbnail'
-                        />
-                        <div className='p-1 title'>{project?.title}</div>
-                        <div className='p-1 description'>{project?.description}</div>
-                        <div className="mt-2 p-1">
-
-                          <div className="description">Purchased</div>
-
-                        </div>
-                        <div className="description p-1">Total Downloads: {project?.downloads > 1000 ? formatLikes(project?.downloads) : formatLikes(project?.downloads)}</div>
-
-                      </Link>
-                      <div className='btnGroup'>
-                        <Button
-                          className='likeButton mr-2'
-                          leftIcon={
-                            clickLike === index ? <FcLike style={{ marginRight: '-2px', marginTop: '-3px', fontSize: '16px' }} /> : <FcLikePlaceholder style={{ marginRight: '-2px', marginTop: '-3px', fontSize: '16px' }} />}
-                          onClick={() => { likeBtn(index) }}
-                        >
-                          {project?.likes > 1000 ? formatLikes(project?.likes) : formatLikes(project?.likes)} Like
-                        </Button>
-
-                        <a
-                          href={`${s3_bucket_url}/projects/${project?.file}`}
-                          onClick={() => { toast({ title: "Project Downloading..", status: 'info', duration: 4000, position: 'top', isClosable: true }); }}
-                        >
-                          <Button
-                            className='downloadButton'
-                            leftIcon={<DownloadForOfflineOutlinedIcon sx={{ marginRight: '-5px', fontSize: '18px' }} />}
-                          >
-                            Download Project Source Codes
-                          </Button>
-                        </a>
+                        <div className="description">Purchased</div>
 
                       </div>
+                      <div className="description p-1">Total Downloads: {project?.downloads > 1000 ? formatLikes(project?.downloads) : formatLikes(project?.downloads)}</div>
+                    </Link>
+                    <div className='btnGroup'>
+                      <Button
+                        className='likeButton mr-2'
+                        leftIcon={
+                          clickLike === index ? <FcLike style={{ marginRight: '-2px', marginTop: '-3px', fontSize: '16px' }} /> : <FcLikePlaceholder style={{ marginRight: '-2px', marginTop: '-3px', fontSize: '16px' }} />}
+                        onClick={() => { likeBtn(index) }}
+                      >
+                        {project?.likes > 1000 ? formatLikes(project?.likes) : formatLikes(project?.likes)} Like
+                      </Button>
+
+                      <a
+                        href={`${s3_bucket_url}/projects/${project?.file}`}
+                        onClick={() => { toast({ title: "Project Downloading..", status: 'info', duration: 4000, position: 'top', isClosable: true }); }}
+                      >
+                        <Button
+                          className='downloadButton'
+                          leftIcon={<DownloadForOfflineOutlinedIcon sx={{ marginRight: '-5px', fontSize: '18px' }} />}
+                        >
+                          Download Project Source Codes
+                        </Button>
+                      </a>
+
                     </div>
-                  )
-                })
-            }
-          </SimpleGrid>
-        }
-      </main>
-    </>
+                  </div>
+                )
+              })
+          }
+        </SimpleGrid>
+      }
+    </div>
   )
 }

@@ -19,23 +19,39 @@ export default async function Home() {
 
   const [projects, setProjects] = useState([]);
 
-  const [reandNumber, setRandNumber] = useState([]);
+  const fetchProjects = async () => {
+    try {
+      const res = await axios.get('/api/projects');
+      if (res.status === 201) {
+        setProjects(res.data.projects);
+      } else {
+        console.log('fetch post error');
+      }
+    } catch (error) {
+      console.log('publish api error', error)
+    }
+  }
+
+  const [projectIds, setprojectIds] = useState([]);
+  const [usersData, setUsers] = useState([]);
+  const fetchusers = async () => {
+    try {
+      const res = await axios.get('/api/users');
+      if (res.status === 201) {
+        setUsers(res.data.users);
+        setprojectIds(res.data.users.projectList);
+      } else {
+        console.log('fetch post error');
+      }
+    } catch (error) {
+      console.log('get users api error', error)
+    }
+  }
 
   useEffect(() => {
-    const fetchProjects = async () => {
-      try {
-        const res = await axios.get('/api/projects');
-        if (res.status === 201) {
-          setProjects(res.data.projects);
-        } else {
-          console.log('fetch post error');
-        }
-      } catch (error) {
-        console.log('publish api error', error)
-      }
-    }
+    fetchusers();
     fetchProjects();
-  }, [reandNumber])
+  }, [])
 
 
 
@@ -59,25 +75,7 @@ export default async function Home() {
     }
   }
 
-  const [projectIds, setprojectIds] = useState([]);
-  const [usersData, setUsers] = useState([]);
-
-  useEffect(() => {
-    const fetchusers = async () => {
-      try {
-        const res = await axios.get('/api/users');
-        if (res.status === 201) {
-          setprojectIds(res.data.users.projectList);
-          setUsers(res.data.users);
-        } else {
-          console.log('fetch post error');
-        }
-      } catch (error) {
-        console.log('get users api error', error)
-      }
-    }
-    fetchusers();
-  }, [])
+  
 
   // Payment Button---------------------------------------------X
   const initializeRazorpay = () => {
