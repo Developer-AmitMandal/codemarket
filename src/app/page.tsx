@@ -152,7 +152,7 @@ export default function Home() {
                               className='imageThumbnail'
                             />
                             <div className='p-1 title'>{project?.title}</div>
-                            <div className='p-1 description'>{project?.description}</div>
+                            <div className='p-1 description descriptionCard'>{project?.description}</div>
                           </Link>
                           <div className='btnGroup'>
                             <Button

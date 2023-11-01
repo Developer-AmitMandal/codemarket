@@ -53,10 +53,9 @@ export async function POST(request: NextRequest) {
         // await writeFile(path2, bufferThumbnail)
         // console.log(`open ${path2} to see the uploaded file`)
 
-        const fileExtension = '.' + file.name.split('.').pop();
-        const newFilename = title + '' + Date.now() + fileExtension;
+        const newFilename = file.name;
 
-        const fileExtension2 = '.' + file.name.split('.').pop();
+        const fileExtension2 = '.' + thumbnail.name.split('.').pop();
         const newthumbnailName = 'thumbnail' + Date.now() + fileExtension2;
 
         const params = {

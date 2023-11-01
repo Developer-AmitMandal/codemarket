@@ -80,6 +80,16 @@ body {
   padding: 10px 5px;
 }
 
+.description{
+  color: #5c5959;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: pre-wrap;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+}
+
 @media (max-width:600px) {
   .mainBody {
     margin: 10px 0px;
