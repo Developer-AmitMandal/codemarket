@@ -138,7 +138,8 @@ function ProjectMedia() {
                         <Skeleton animation={false} style={{ width: '100px' }} />
                     </Button>
                 </div>
-            </Box></>
+            </Box>
+            </>
 
 
     );

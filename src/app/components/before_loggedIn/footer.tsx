@@ -1,3 +1,4 @@
+'use client'
 import { CalendarDaysIcon, HandRaisedIcon } from '@heroicons/react/24/outline'
 
 export default function Footer() {
@@ -8,8 +9,7 @@ export default function Footer() {
           <div className="max-w-xl lg:max-w-lg">
             <h2 className="text-3xl font-bold tracking-tight text-white sm:text-4xl">Subscribe to our Community.</h2>
             <p className="mt-4 text-lg leading-8 text-gray-300">
-              Nostrud amet eu ullamco nisi aute in ad minim nostrud adipisicing velit quis. Duis tempor incididunt
-              dolore.
+              Explore a diverse selection of projects, from web development and mobile apps to machine learning and more. Find the code you need to kickstart your projects.
             </p>
             <div className="mt-6 flex max-w-md gap-x-4">
               <label htmlFor="email-address" className="sr-only">
@@ -37,9 +37,9 @@ export default function Footer() {
               <div className="rounded-md bg-white/5 p-2 ring-1 ring-white/10">
                 <CalendarDaysIcon className="h-6 w-6 text-white" aria-hidden="true" />
               </div>
-              <dt className="mt-4 font-semibold text-white">Weekly articles</dt>
+              <dt className="mt-4 font-semibold text-white">Weekly Event</dt>
               <dd className="mt-2 leading-7 text-gray-400">
-                Non laboris consequat cupidatat laborum magna. Eiusmod non irure cupidatat duis commodo amet.
+                Attend our weekly CodeWaves events to gain insights from industry experts, discover new technologies, and engage in lively discussions.
               </dd>
             </div>
             <div className="flex flex-col items-start">
@@ -48,7 +48,8 @@ export default function Footer() {
               </div>
               <dt className="mt-4 font-semibold text-white">No spam</dt>
               <dd className="mt-2 leading-7 text-gray-400">
-                Officia excepteur ullamco ut sint duis proident non adipisicing. Voluptate incididunt anim.
+                Contact E-mail:
+                global.codemarket@gmail.com
               </dd>
             </div>
           </dl>
