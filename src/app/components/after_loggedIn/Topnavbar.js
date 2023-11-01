@@ -26,6 +26,7 @@ export function Topnavbar() {
         try {
             const res = await axios.get('/api/users/logout');
             if (res.status === 201) {
+                sessionStorage.removeItem('codemarket');
                 toast({ title: res.data.msg, status: 'success', duration: 4000, position: 'top-right', isClosable: true });
                 setTimeout(() => {
                     router.push('/');
@@ -52,9 +53,10 @@ export function Topnavbar() {
     const [usersData, setUsers] = useState([]);
     const fetchusers = async () => {
         try {
-            const res = await axios.get('/api/users');
+            const res = await axios.post('/api/users', { token: sessionStorage.getItem('codemarket') });
             if (res.status === 201) {
                 setUsers(res.data.users);
+                setprojectIds(res.data.users.projectList);
             } else {
                 console.log('fetch post error');
             }

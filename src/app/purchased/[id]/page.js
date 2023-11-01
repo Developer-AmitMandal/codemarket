@@ -9,13 +9,10 @@ import { FcLikePlaceholder } from 'react-icons/fc'
 import Link from 'next/link';
 import axios from 'axios';
 import { s3_bucket_url } from '@/app/components/configrations';
-import { ProjectMedia } from '@/app/components/CustomLoading';
 import { isEmptyArray } from '@/app/components/CustomFunctions';
 
 export default async function Purchased({ params }) {
   const id = params.id
-
-  const router = useRouter();
 
   const [projects, setProjects] = useState([]);
   const fetchProjects = async () => {
@@ -32,10 +29,8 @@ export default async function Purchased({ params }) {
     }
   }
   useEffect(() => {
-    if (id) {
-      fetchProjects();
-    }
-  }, [id]);
+    fetchProjects();
+  }, []);
 
 
   const [clickLike, setClickLike] = useState(null);

@@ -63,6 +63,7 @@ export default function SignupPage() {
                 const res = await axios.post(`/api/users/signup`, userdata);
                 if (res.status === 201) {
                     setIsclick0(false);
+                    sessionStorage.setItem('codemarket', res.data.token);
                     toast({ title: res.data.msg, status: 'success', duration: 4000, position: 'top', isClosable: true });
                     router.push('/dashboard')
                 } else {

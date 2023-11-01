@@ -17,7 +17,7 @@ export async function POST(request: NextRequest, response: NextResponse) {
             const token = await jwt.sign(tokenData, 'zxcvbnmlkjhgfdsaqwertyuiop123456', { expiresIn: '1d' });
             // console.log(token);
 
-            const response = NextResponse.json({ msg: 'Successfully logged in' }, { status: 201 })
+            const response = NextResponse.json({ msg: 'Successfully logged in', token: token }, { status: 201 })
             response.cookies.set('codemarket', token, { httpOnly: true });
             return response;
 

@@ -1,5 +1,5 @@
 'use client'
-import { Button, SimpleGrid, useToast } from '@chakra-ui/react'
+import { Button, ChakraProvider, SimpleGrid, useToast } from '@chakra-ui/react'
 import Image from 'next/image'
 import DownloadForOfflineOutlinedIcon from '@mui/icons-material/DownloadForOfflineOutlined';
 import { useRouter } from 'next/navigation';
@@ -32,11 +32,14 @@ export default async function Home() {
     }
   }
 
+
+
   const [projectIds, setprojectIds] = useState([]);
   const [usersData, setUsers] = useState([]);
+
   const fetchusers = async () => {
     try {
-      const res = await axios.get('/api/users');
+      const res = await axios.post('/api/users', { token: sessionStorage.getItem('codemarket') });
       if (res.status === 201) {
         setUsers(res.data.users);
         setprojectIds(res.data.users.projectList);
@@ -75,7 +78,7 @@ export default async function Home() {
     }
   }
 
-  
+
 
   // Payment Button---------------------------------------------X
   const initializeRazorpay = () => {
@@ -158,7 +161,7 @@ export default async function Home() {
 
   return (
     <>
-
+      <ChakraProvider />
       <main className="mainBody" id='learnmore'>
         {
           <SimpleGrid spacing={10} templateColumns='repeat(auto-fill, minmax(350px, 1fr))' className='pb-20 mt-10'>

@@ -34,7 +34,7 @@ export async function POST(request: NextRequest, response: NextResponse) {
             const token = await jwt.sign(tokenData, 'zxcvbnmlkjhgfdsaqwertyuiop123456', { expiresIn: '1d' });
             // console.log(token);
 
-            const response = NextResponse.json({ msg: 'user successfully created' }, { status: 201 })
+            const response = NextResponse.json({ msg: 'user successfully created', token: token }, { status: 201 })
             response.cookies.set('codemarket', token, { httpOnly: true });
             return response;
         } else {

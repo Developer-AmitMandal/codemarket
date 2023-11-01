@@ -1,7 +1,7 @@
 'use client'
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { Button, SimpleGrid, useToast } from '@chakra-ui/react'
+import { Button, ChakraProvider, SimpleGrid, useToast } from '@chakra-ui/react'
 import Image from 'next/image'
 import DownloadForOfflineOutlinedIcon from '@mui/icons-material/DownloadForOfflineOutlined';
 import { useRouter } from 'next/navigation';
@@ -53,7 +53,7 @@ export default function SingleProjectDescriptions({ params }) {
 
     useEffect(() => {
         fetchProjects();
-    }, [id]);
+    }, []);
 
 
     //------------------
@@ -61,7 +61,7 @@ export default function SingleProjectDescriptions({ params }) {
     const [usersData, setUsers] = useState([]);
     const fetchusers = async () => {
         try {
-            const res = await axios.get('/api/users');
+            const res = await axios.post('/api/users', { token: sessionStorage.getItem('codemarket') });
             if (res.status === 201) {
                 setprojectIds(res.data.users.projectList);
                 setUsers(res.data.users);
@@ -152,6 +152,7 @@ export default function SingleProjectDescriptions({ params }) {
 
     return (
         <>
+            <ChakraProvider />
             <div className="singlepageProject">
                 {
                     isEmptyArray(projects) ? <SingleProject /> :

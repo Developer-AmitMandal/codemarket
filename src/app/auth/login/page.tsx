@@ -52,8 +52,10 @@ export default function LoginPage() {
                 const res = await axios.post(`/api/users/login`, userdata);
                 if (res.status === 201) {
                     setIsclick0(false);
+                    sessionStorage.setItem('codemarket', res.data.token);
                     toast({ title: res.data.msg, status: 'success', duration: 4000, position: 'top', isClosable: true });
-                    router.push('/dashboard')
+                    router.push('/dashboard');
+                    console.log(res)
                 } else {
                     setIsclick0(false);
                     toast({ title: res.data.msg, status: 'error', duration: 4000, position: 'top', isClosable: true });
