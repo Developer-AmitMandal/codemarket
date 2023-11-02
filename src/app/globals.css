@@ -97,7 +97,7 @@ body {
 
   .projectCard {
     background-color: rgb(255, 255, 255);
-    height: 450px;
+    height: auto;
     margin: 10px;
     border-radius: 5px;
     box-shadow: rgba(17, 17, 26, 0.1) 0px 0px 16px;
