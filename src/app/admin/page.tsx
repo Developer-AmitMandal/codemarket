@@ -125,9 +125,11 @@ export default function AdminPanel({ params }: any) {
 
         if (!projectId) {
             toast({ title: 'select Project', status: 'warning', duration: 4000, position: 'top-right', isClosable: true });
-        } else if (!description) {
-            toast({ title: 'Enter Description', status: 'warning', duration: 4000, position: 'top-right', isClosable: true });
-        } else {
+        } 
+        // else if (!description) {
+        //     toast({ title: 'Enter Description', status: 'warning', duration: 4000, position: 'top-right', isClosable: true });
+        // } 
+        else {
             const formData = new FormData();
             formData.set('image', image.image);
             formData.set('title', data.description);
