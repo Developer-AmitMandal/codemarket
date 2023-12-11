@@ -8,7 +8,7 @@ export async function POST(request: NextRequest) {
 
         let body = response.razorpay_order_id + "|" + response.razorpay_payment_id;
 
-        var expectedSignature = crypto.createHmac('sha256', 'mpDz9Nus4qdWX1NbvTVV3EBW')
+        var expectedSignature = crypto.createHmac('sha256', 'AdcGsIXD3X04CQA5VpmyVifh')
             .update(body.toString())
             .digest('hex');
 
