@@ -6,7 +6,7 @@ export async function POST(request: NextRequest) {
     try {
         const { amount, projectId, email, fullName,mobile } = await request.json();
         // var instance = new Razorpay({ key_id: 'rzp_test_zPDhEMoZ6ivNaQ', key_secret: 'AdcGsIXD3X04CQA5VpmyVifh' }) //test
-        var instance = new Razorpay({ key_id: 'rzp_live_ZBISemUZOvkeJA', key_secret: 'mpDz9Nus4qdWX1NbvTVV3EBW' }) //live
+        var instance = new Razorpay({ key_id: 'rzp_test_zPDhEMoZ6ivNaQ', key_secret: 'AdcGsIXD3X04CQA5VpmyVifh' }) //live
         const d = await instance.orders.create({
             amount: amount * 100,
             currency: "INR",
