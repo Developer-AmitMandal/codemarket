@@ -107,7 +107,7 @@ export default async function Home() {
     }
 
     const options = {
-      key: 'rzp_live_ZBISemUZOvkeJA',
+      key: 'rzp_test_zPDhEMoZ6ivNaQ',
       amount: Number(data.amount),
       currency: data.currency,
       order_id: data.id,
