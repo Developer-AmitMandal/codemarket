@@ -41,43 +41,48 @@ export async function POST(request: NextRequest) {
         const bytes = await file.arrayBuffer();
         const bufferFile = Buffer.from(bytes);
 
-        // const path = `./public/uploads/${file.name}`
-        // await writeFile(path, bufferFile)
-        // console.log(`open ${path} to see the uploaded file`);
+        const path = `./public/uploads/${file.name}`
+        await writeFile(path, bufferFile)
+        console.log(`open ${path} to see the uploaded file`);
 
         // thumbnail
         const bytesThumbnail = await thumbnail.arrayBuffer();
         const bufferThumbnail = Buffer.from(bytesThumbnail);
 
-        // const path2 = `./public/uploads/${thumbnail.name}`
-        // await writeFile(path2, bufferThumbnail)
-        // console.log(`open ${path2} to see the uploaded file`)
+        const path2 = `./public/uploads/${thumbnail.name}`
+        await writeFile(path2, bufferThumbnail)
+        console.log(`open ${path2} to see the uploaded file`)
 
         const newFilename = file.name;
 
-        const fileExtension2 = '.' + thumbnail.name.split('.').pop();
-        const newthumbnailName = 'thumbnail' + Date.now() + fileExtension2;
+        // const fileExtension2 = '.' + thumbnail.name.split('.').pop();
+        // const newthumbnailName = 'thumbnail' + Date.now() + fileExtension2;
 
-        const params = {
-            Bucket: process.env.Buket_Name,
-            Key: 'projects/' + newFilename,
-            Body: bufferFile,
-        };
-        const command = new PutObjectCommand(params);
-        await s3Client.send(command);
 
-        const params2 = {
-            Bucket: process.env.Buket_Name,
-            Key: 'thumbnails/' + newthumbnailName,
-            Body: bufferThumbnail,
-        };
-        const command2 = new PutObjectCommand(params2);
-        await s3Client.send(command2);
+        // store in aws //
+        // const params = {
+        //     Bucket: process.env.Buket_Name,
+        //     Key: 'projects/' + newFilename,
+        //     Body: bufferFile,
+        // };
+        // const command = new PutObjectCommand(params);
+        // await s3Client.send(command);
+
+        // const params2 = {
+        //     Bucket: process.env.Buket_Name,
+        //     Key: 'thumbnails/' + newthumbnailName,
+        //     Body: bufferThumbnail,
+        // };
+
+        // const command2 = new PutObjectCommand(params2);
+        // await s3Client.send(command2);
+
+
         const insertData = await projects.insertOne({
             title: String(title),
             description: String(description),
             file: String(newFilename),
-            thumbnail: String(newthumbnailName),
+            thumbnail: String(thumbnail.name),
             price: Number(price),
             likes: Number(likes),
             downloads: Number(downloads),
@@ -136,7 +141,7 @@ export async function PATCH(request: NextRequest) {
         const command2 = new PutObjectCommand(params2);
         await s3Client.send(command2);
 
-        const updatedData = await projects.updateOne({ _id:new ObjectId(projectId) }, {
+        const updatedData = await projects.updateOne({ _id: new ObjectId(projectId) }, {
             $push: {
                 details: {
                     id: new ObjectId().toString(),
