@@ -4,7 +4,12 @@ const nextConfig = {
     reactStrictMode: true,
     swcMinify: true,
     images: {
-        domains: ['codemarket.s3.ap-south-1.amazonaws.com','static.vecteezy.com']
+        domains: [
+            'codemarket.s3.ap-south-1.amazonaws.com',
+            'static.vecteezy.com',
+            'emartbackend-7b7e.onrender.com',
+            'user-images.githubusercontent.com'
+        ]
     },
 
     async headers() {
