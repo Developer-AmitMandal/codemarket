@@ -162,7 +162,7 @@ export default function SingleProjectDescriptions({ params }) {
                                 <div key={index} className="singleproduct">
                                     <div className="image-container">
                                         <Image
-                                            src={`${s3_bucket_url}/thumbnails/${project?.thumbnail}`}
+                                            src={project?.thumbnail}
                                             alt="Picture of the codemarket"
                                             width={1000} //automatically provided
                                             height={1000} //automatically provided

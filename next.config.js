@@ -8,7 +8,8 @@ const nextConfig = {
             'codemarket.s3.ap-south-1.amazonaws.com',
             'static.vecteezy.com',
             'emartbackend-7b7e.onrender.com',
-            'user-images.githubusercontent.com'
+            'user-images.githubusercontent.com',
+            'miro.medium.com'
         ]
     },
 

@@ -173,7 +173,7 @@ export default async function Home() {
                     <div key={index} className='projectCard'>
                       <Link href={`/dashboard/${project?._id}`}>
                         <Image
-                          src={`${s3_bucket_url}/thumbnails/${project?.thumbnail}`}
+                          src={project?.thumbnail}
                           alt="Picture of the codemarket"
                           width={500} //automatically provided
                           height={500} //automatically provided
