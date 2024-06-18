@@ -3,6 +3,19 @@ Live Website Link 👇
 
 Live Website Link 👆
 
+
+![Screenshot (96)](https://github.com/DEV6210/codemarket/assets/91625966/9391c705-91ff-4c24-8609-611b143a052a)
+
+![Screenshot (95)](https://github.com/DEV6210/codemarket/assets/91625966/7e06b4a1-6868-413a-9769-1b1e9eaab37e)
+
+
+
+
+
+
+
+
+
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
 ## Getting Started
